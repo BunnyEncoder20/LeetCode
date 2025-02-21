@@ -26,6 +26,36 @@ class Solution:
         #     temp = temp.next
         # return True
         
+        # OPTIMAL: rev half of the LL
+        if not head and not head.next: return True
+        
+        slow,fast = head,head
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+        secondHalf = self.reverseLL(slow)
+        firstHalf = head
+        while secondHalf:
+            if firstHalf.val != secondHalf.val:
+                return False 
+            firstHalf = firstHalf.next
+            secondHalf = secondHalf.next
+        return True
+
+    def reverseLL(self, temp):
+        if not temp or not temp.next:
+            return temp
+        
+        prev = None
+        while temp:
+            next = temp.next
+            temp.next = prev
+            prev = temp
+            temp = next
+        
+        return prev
+        
+        
         
             
 # @lc code=end
