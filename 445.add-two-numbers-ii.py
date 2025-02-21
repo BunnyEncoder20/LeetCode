@@ -13,35 +13,34 @@
 class Solution:
     def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
         total, carry = 0, 0
-        result = ListNode(-1)
+        result = None 
         
-        l1, l2, l3 = self.reverseLL(l1), self.reverseLL(l2), result
-
-        while l1 or l2 or carry:
+        # make stacks
+        p1,p2 = l1,l2
+        stk1, stk2 = [],[]
+        while p1:
+            stk1.append(p1)
+            p1 = p1.next
+        while p2:
+            stk2.append(p2)
+            p2 = p2.next
+        
+        while stk1 or stk2 or carry:
             total = carry
+            if stk1:
+                total += stk1.pop().val
+            if stk2:
+                total += stk2.pop().val
             
-            if l1:
-                total += l1.val
-                l1 = l1.next
-            if l2:
-                total += l2.val
-                l2 = l2.next
+            carry, total = divmod(total, 10)
             
-            carry = total // 10
-            total %= 10
-            l3.next = ListNode(total)
-            l3 = l3.next
+            new = ListNode(total)
+            new.next = result
+            result = new
+            
+        return result
+             
         
-        return self.reverseLL(result.next)
-    
-    def reverseLL(self, temp):
-        back = None
-        while temp:
-            front = temp.next
-            temp.next = back
-            back = temp
-            temp = front
-        return back
             
         
         
