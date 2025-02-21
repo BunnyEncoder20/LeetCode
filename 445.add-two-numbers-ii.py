@@ -12,33 +12,46 @@
 #         self.next = next
 class Solution:
     def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
-        total, carry = 0, 0
-        result = None 
+        len1, len2 = self.getLength(l1), self.getLength(l2)
+        if len1 < len2:
+            l1 = self.addPadding(l1, len2-len1)
+        elif len1 > len2:
+            l2 = self.addPadding(l2, len1-len2)
         
-        # make stacks
-        p1,p2 = l1,l2
-        stk1, stk2 = [],[]
-        while p1:
-            stk1.append(p1)
-            p1 = p1.next
-        while p2:
-            stk2.append(p2)
-            p2 = p2.next
-        
-        while stk1 or stk2 or carry:
-            total = carry
-            if stk1:
-                total += stk1.pop().val
-            if stk2:
-                total += stk2.pop().val
-            
-            carry, total = divmod(total, 10)
-            
-            new = ListNode(total)
+        carry, result = self.addLists(l1,l2)
+        if carry:
+            new = ListNode(carry)
             new.next = result
             result = new
-            
+        
         return result
+    
+    def getLength(self, temp):
+        length = 0
+        while temp:
+            length += 1
+            temp = temp.next
+        return length
+
+    def addPadding(self, head, padding):
+        for _ in range(padding):
+            new = ListNode(0)
+            new.next = head
+            head = new
+        return head
+        
+    def addLists(self, l1, l2):
+        if not l1 and not l2:
+            return (0, None)
+
+        carry, nextNode = self.addLists(l1.next, l2.next)
+        
+        total = l1.val + l2.val + carry
+        carry,total = divmod(total, 10)
+        newNode = ListNode(total)
+        newNode.next = nextNode
+        return (carry, newNode)
+            
              
         
             
