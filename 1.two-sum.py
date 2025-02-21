@@ -10,25 +10,12 @@ from collections import defaultdict
 
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-        original = defaultdict(list)
-        for i,n in enumerate(nums):
-            original[n].append(i)
-            
-        nums.sort()
-        l,r = 0,len(nums)-1
-        
-        while l < r:
-            summ = nums[l] + nums[r]
-            if summ == target:
-                # if dups
-                if nums[l] == nums[r]:
-                    return original[nums[l]][0:2]
-                return [original[nums[l]].pop(0), original[nums[r]].pop(0)]
-            elif summ < target:
-                l += 1
-            else:
-                r -= 1
-        
+        mpp = {}
+        for i in range(len(nums)):
+            need = target - nums[i]
+            if need in mpp:
+                return [mpp[need], i]
+            mpp[nums[i]] = i
         return [-1,-1]
         
         
