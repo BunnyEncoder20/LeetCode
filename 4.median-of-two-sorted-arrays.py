@@ -8,30 +8,39 @@
 from typing import List
 class Solution:
     def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
-        n,m = len(nums1),len(nums2)
-        l = n+m                     # merged length
-        nums3 = self.merge(nums1, nums2)
-        if l % 2 == 0:
-            return ((nums3[l//2]) + (nums3[(l//2) - 1])) / 2
-        return nums3[l//2]
-
-    def merge(self, arr1, arr2):
-        i,j = 0,0
-        arr3 = []
-        while i<len(arr1) and j<len(arr2):
-            if arr1[i] < arr2[j]:
-                arr3.append(arr1[i])
-                i += 1
+        n1,n2 = len(nums1),len(nums2)
+        if n1 > n2: 
+            nums1,nums2 = nums2,nums1
+            n1,n2 = n2,n1
+        if n1 == 0:
+            if n2%2==1: return nums2[n2//2]
+            return (nums2[n2//2] + nums2[n2//2 - 1]) / 2
+        
+        on_your_left = (n1+n2+1)//2
+        low,high = 0,n1
+        
+        while low<=high:
+            mid1 = (low+high)//2
+            mid2 = on_your_left - mid1
+            
+            # mid elements
+            r1 = nums1[mid1] if mid1 < n1 else float('inf')
+            r2 = nums2[mid2] if mid2 < n2 else float('inf')
+            l1 = nums1[mid1-1] if mid1-1 >= 0 else float('-inf')
+            l2 = nums2[mid2-1] if mid2-1 >= 0 else float('-inf')
+            
+            if (l1<=r2 and l2<=r1):
+                if (n1+n2)%2==1: return max(l1,l2)
+                return (max(l1,l2) + min(r1,r2)) / 2
+            elif l1 > r2:
+                high = mid1-1
             else:
-                arr3.append(arr2[j])
-                j += 1
-        while i<len(arr1):
-            arr3.append(arr1[i])
-            i+=1
-        while j<len(arr2):
-            arr3.append(arr2[j])
-            j += 1
-        return arr3
+                low = mid1+1
+        
+        return -1
+                
+        
+        
                 
             
         
