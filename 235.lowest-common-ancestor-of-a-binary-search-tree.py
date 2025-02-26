@@ -13,21 +13,37 @@
 #         self.right = None
 
 class Solution:
-    def lowestCommonAncestor(self, node: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
-        if node == None or node == p or node == q:
-            return node
-
-        lsb = self.lowestCommonAncestor(node.left, p, q)
-        rsb = self.lowestCommonAncestor(node.right, p, q)
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        def findPath(node, target, path):
+            if not node:
+                return False
+            
+            path.append(node)
+            if node == target: 
+                return True
+            if findPath(node.left, target, path) or findPath(node.right, target, path):
+                return True
+            
+            # both lsb and rst return false
+            path.pop()
+            return False
         
-        if lsb == None:
-            return rsb
-        elif rsb == None:
-            return lsb
-        elif lsb and rsb:
-            return node
-        else:
-            return None
+        path1 = []
+        path2 = []
+        findPath(root, p, path1)
+        findPath(root, q, path2)
+        
+        lca = None
+        for i in range(min(len(path1), len(path2))):
+            if path1[i] == path2[i]:
+                lca = path1[i]
+            else:
+                break
+        return lca
+            
+        
+        
+            
         
         
 # @lc code=end
