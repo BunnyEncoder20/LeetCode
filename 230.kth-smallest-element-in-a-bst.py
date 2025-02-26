@@ -14,18 +14,18 @@
 from typing import Optional
 class Solution:
     def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
-        def performInorder(node):
+        def inOrder(node):
             nonlocal count, result
             if not node: return 
-            performInorder(node.left)
+            inOrder(node.left)
             count+=1
             if count == k:
                 result = node.val
                 return
-            performInorder(node.right)
+            inOrder(node.right)
         
         count,result = 0,None
-        performInorder(root)
+        inOrder(root)
         return result
         
         
