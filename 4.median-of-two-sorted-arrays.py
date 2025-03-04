@@ -16,7 +16,7 @@ class Solution:
             nums1,nums2 = nums2,nums1
             n1,n2 = n2,n1
         
-        needed_left = (n1+n2+1)//2
+        needed_left = (n1+n2+1)//2 
         low,high = 0,n1
         while low<=high:
             mid1 = (low+high)//2
