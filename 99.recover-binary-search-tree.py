@@ -12,31 +12,49 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def recoverTree(self, root: Optional[TreeNode]) -> None:
-        def initTraversal(node):
-            '''initial traversal to get all node values'''
-            if not node: return 
-            initTraversal(node.left)
-            inorder.append(node.val)
-            initTraversal(node.right)
+    def __init__(self):
+        self.first = None
+        self.middle = None
+        self.last = None
+        self.prev = TreeNode(float('-inf'))
         
-        # construct the inorder arr
-        inorder = []
-        initTraversal(root)
-        inorder.sort()      # correct inorder
-
-        def inOrderTraversal(node):
-            '''cross check the inorder with correct inorder'''
-            nonlocal i      # so that i is upadted across all recursive calls
+    def recoverTree(self, root: Optional[TreeNode]) -> None:
+        def inorderTraversal(node):
             if not node: return 
-            inOrderTraversal(node.left)
-            if node.val != inorder[i]:
-                node.val = inorder[i]
-            i += 1
-            inOrderTraversal(node.right)
-
-        i = 0
-        inOrderTraversal(root)
+            
+            # go to LST
+            inorderTraversal(node.left)
+            
+            # process the current node
+            if node.val < self.prev.val:
+                # violation
+                if not self.first:
+                    # first violation
+                    self.middle = node
+                    self.first = self.prev
+                else:
+                    self.last = node
+            # update the prev node
+            self.prev = node
+            
+            # go to RST
+            inorderTraversal(node.right)
+        
+        # init traversal
+        inorderTraversal(root)
+        
+        # swap the nodes
+        if self.first and self.last:
+            # if 2 violations (wrong nodes are not adj)
+            self.first.val, self.last.val = self.last.val,self.first.val
+        elif self.first and self.middle:
+            # if 1 voilation (wrong ondes are adj)
+            self.first.val,self.middle.val = self.middle.val,self.first.val
+        
+        return 
+            
+        
+    
         
 # @lc code=end
 
