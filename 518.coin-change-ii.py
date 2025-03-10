@@ -14,16 +14,20 @@ class Solution:
             return 1
           else:
             return 0
-        
-        # normally
+        # dp check
+        if dp[i][need] != -1: return dp[i][need]
+
+        # calc dp entry
         nottake = recursive(i-1, need)
         take = 0
         if coins[i] <= need:
           take = recursive(i, need - coins[i])
         
-        return nottake + take
+        dp[i][need] = nottake + take
+        return dp[i][need]
       
       N = len(coins)
+      dp = [[-1]*(amount+1) for _ in range(N)]
       return recursive(N-1, amount)
         
 # @lc code=end
