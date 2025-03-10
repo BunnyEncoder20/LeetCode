@@ -12,7 +12,6 @@
 #         self.left = left
 #         self.right = right
 
-import math
 from typing import Optional
 class Solution:
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
@@ -26,7 +25,7 @@ class Solution:
             
             return leftValid and rightValid
         
-        return validate(root, -math.inf, math.inf)
+        return validate(root, float('-inf'), float('inf'))
         
 # @lc code=end
 
