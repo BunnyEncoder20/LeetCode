@@ -20,17 +20,17 @@ class Solution:
         # morris traversal approach
         temp = root
         while temp:
-          if temp.left != None:
-            prev = temp.left
-            while prev.right:
-              prev = prev.right
+            if temp.left != None:
+                    prev = temp.left
+                    while prev.right:
+                        prev = prev.right
+                    
+                    prev.right = temp.right
+                    temp.right = temp.left
+                    temp.left = None
             
-            prev.right = temp.right
-            temp.right = temp.left
-            temp.left = None
-          
-          # update the temp
-          temp = temp.right
+            # update the temp
+            temp = temp.right
         
 # @lc code=end
 
