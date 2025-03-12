@@ -17,20 +17,20 @@ class Solution:
         """
         Do not return anything, modify root in-place instead.
         """
-        prev = None
-        
-        def flatten(node):
-            nonlocal prev
-            if not node:
-                return 
-            flatten(node.right)
-            flatten(node.left)
-            node.right = prev
-            node.left = None
-            prev = node
-        
-        flatten(root)
-        return root
+        # morris traversal approach
+        temp = root
+        while temp:
+          if temp.left != None:
+            prev = temp.left
+            while prev.right:
+              prev = prev.right
+            
+            prev.right = temp.right
+            temp.right = temp.left
+            temp.left = None
+          
+          # update the temp
+          temp = temp.right
         
 # @lc code=end
 
