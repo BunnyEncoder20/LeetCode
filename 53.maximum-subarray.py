@@ -9,15 +9,20 @@ class Solution:
     def maxSubArray(self, nums: List[int]) -> int:
       maxsum = float('-inf')
       sum = 0
+      start, ansStart, ansEnd = 0, 0, 0
       
-      for num in nums:
-        sum += num
+      for i in range(len(nums)):
+        sum += nums[i]
         if sum > maxsum:
           maxsum = sum
+          ansStart = start
+          ansEnd = i
+          
         if sum < 0:
           sum = 0
+          start = i+1
       
-      return maxsum
+      return [ansStart, ansEnd]
             
           
 # @lc code=end
