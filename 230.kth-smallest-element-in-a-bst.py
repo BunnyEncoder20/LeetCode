@@ -14,25 +14,19 @@
 from typing import Optional
 class Solution:
     def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
-        class Results:
-            def __init__(self):
-                self.count = 0
-                self.result = None
-                
         def inOrder(node):
-            if not node or res.result != None: 
-                return 
-
+            nonlocal k, res
+            if not node or k == 0: return 
             inOrder(node.left)
-            res.count+=1
-            if res.count == k:
-                res.result = node.val
+            k -= 1
+            if k == 0:
+                res = node.val
                 return
             inOrder(node.right)
         
-        res = Results()
+        res = None
         inOrder(root)
-        return res.result
+        return res
         
         
 # @lc code=end
