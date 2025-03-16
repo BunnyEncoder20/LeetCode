@@ -17,6 +17,7 @@ class Solution:
                     # backtrack
                     vis.remove(i)
             
+            # none of that neighbours returned true, hence false
             return False
 
         # construct adj
@@ -25,6 +26,7 @@ class Solution:
             adj[u].append(v)
             adj[v].append(u)
         
+        # start from each vertice
         for node in range(N):
             if backtracking(node, set(), 1):
                 return True
