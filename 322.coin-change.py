@@ -7,34 +7,33 @@
 # @lc code=start
 class Solution:
     def coinChange(self, coins: List[int], amount: int) -> int:
-      def recursive(i, need):
-        # base case
-        if i == 0: 
-          if need % coins[i] == 0:
-            return need // coins[i]
-          else:
-            return float('inf')
+        def MinimumCoins(self, coins, amount):
+            # init
+            n = len(coins)
+            dp = [[0] * (amount+1) for _ in range(n)]
 
-        # check dp
-        if dp[i][need] != -1: return dp[i][need]
+            # init oth row of table
+            for T in range(amount+1):
+                if T % coins[0] == 0: dp[0][T] = T // coins[0]
+                else: dp[0][T] = float('inf')
+
+            for i in range(1, n):
+                for T in range(amount+1):
+                    # init
+                    take, nottake = float('inf'), float('inf') 
+
+                    # not take
+                    nottake = 0 + dp[i-1][T]
+                    
+                    # take
+                    if coins[i] <= T:
+                        take = 1 + dp[i][T - coins[i]]
+                    
+                    dp[i][T] = min(take, nottake)
+            
+            if dp[n-1][amount] >= int(1e9): return -1
+            
+            return dp[n-1][amount]
         
-        # calc dp table entry
-        nottake = 0 + recursive(i-1, need)
-        take = float('inf')
-        if coins[i] <= need:
-          take = 1 + recursive(i, need - coins[i])
-        
-        # update dp & return
-        dp[i][need] = min(take, nottake)
-        return dp[i][need]
-      
-      n = len(coins)
-      # trivial case
-      if n == 0 or amount == 0: return 0
-      
-      # DS
-      dp = [[-1]*(amount+1) for _ in range(n)]
-      res = recursive(n-1, amount)
-      return res if res != float('inf') else -1
 # @lc code=end
 
