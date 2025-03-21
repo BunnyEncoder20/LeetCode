@@ -5,8 +5,10 @@
 #
 
 # @lc code=start
+from functools import cache
 class Solution:
     def longestCommonSubsequence(self, text1: str, text2: str) -> int:
+      @cache
       def recursive(i1, i2):
         # base case
         if i1 < 0 or i2 < 0:
