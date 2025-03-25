@@ -5,39 +5,46 @@
 #
 
 # @lc code=start
-from functools import cache
 class Solution:
     def isMatch(self, s: str, p: str) -> bool:
-        @cache
-        def recursive(i, j):
-            # base case: both strings exhausted
-            if i < 0 and j < 0:
-                return True
-
-            # base case: pattern exhausted
-            if i >= 0 and j < 0: 
-                return False
-
-            # base case: primary exhasted 
-            # (could convert pattern to empty string)
-            if i < 0 and j >= 0:
-                return all([ch == "*" for ch in p[:j+1]])
-            
-            # normally
-            # matching char or '?' case
-            if s[i] == p[j] or p[j] == '?':
-                return recursive(i-1, j-1)
-            
-            # not matching but '*' case 
-            if p[j] == "*":
-                return recursive(i-1, j) or recursive(i, j-1)
-            
-            # not match and no "?" or "*"
-            return False 
-            
-            
-        n,m = len(s), len(p)
-        return recursive(n-1, m-1)
+        # init 
+        n,m = len(s),len(p)
+        dp = [[False] * (m+1) for _ in range(n+1)]
+        
+        # base case: both strings exhausted 
+        dp[0][0] = True
+        
+        # base case: pattern exhausted (j=0)
+        for i in range(1, n+1):
+            dp[i][0] = False
+        
+        # base case: primary exhausted (i=0)
+        for j in range(1, m+1):
+            if p[j-1] == "*":
+                # '*' can act as empty string seq
+                dp[0][j] = dp[0][j-1]
+            else:
+                # once non '*' char encountered, it cannot behave 
+                # as empty string
+                break
+        
+        # Fill dp table
+        for i in range(1, n+1):
+            for j in range(1, m+1):
+                # matching char or '?' case 
+                if s[i-1] == p[j-1] or p[j-1] == '?':
+                    dp[i][j] = dp[i-1][j-1]
+                
+                # not matching but '*' case
+                elif p[j-1] == '*':
+                    dp[i][j] = dp[i-1][j] or dp[i][j-1]
+                
+                # not matching and no '?' or '*' 
+                else:
+                    dp[i][j] = False
+        
+        # return ans
+        return dp[n][m]
         
 # @lc code=end
 
