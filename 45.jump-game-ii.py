@@ -10,15 +10,25 @@ class Solution:
     def jump(self, nums: List[int]) -> int:
         # init
         n = len(nums)
-        dp = [float('inf')] * n
-        dp[0] = 0   # no steps needed to get to first idx
+        jumps = 0
+        currEnd = 0
+        farthest = 0
+
+        # trivial case 
+        if n == 1: return 0
         
-        for i in range(n):
-            for jumps in range(1, nums[i]+1):
-                if i+jumps < n:
-                    dp[i+jumps] = min( dp[i+jumps], dp[i]+1)
+        # loop through
+        for i in range(n-1):
+            farthest = max(farthest, i + nums[i])
+            
+            if i == currEnd:
+                jumps += 1
+                currEnd = farthest
+            
+                if currEnd >= n-1:
+                    break
         
-        return dp[n-1]
+        return jumps
         
 # @lc code=end
 
