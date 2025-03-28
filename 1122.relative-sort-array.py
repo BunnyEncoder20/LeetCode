@@ -5,6 +5,7 @@
 #
 
 # @lc code=start
+from typing import List
 class Solution:
     def relativeSortArray(self, arr1: List[int], arr2: List[int]) -> List[int]:
         # init 
@@ -30,4 +31,5 @@ class Solution:
             
         
 # @lc code=end
+
 
