@@ -9,8 +9,8 @@ import heapq
 class MedianFinder:
 
     def __init__(self):
-        self.left = []
-        self.right = []  
+        self.left = []      # maxheap
+        self.right = []     # minheap
 
     def addNum(self, num: int) -> None:
         if len(self.left) == len(self.right):
@@ -19,10 +19,12 @@ class MedianFinder:
             heapq.heappush(self.right, -heapq.heappushpop(self.left, -num))
 
     def findMedian(self) -> float:
-        if not self.left: return 0
+        if len(self.left) == 0: return -1
+        
         if len(self.left) > len(self.right):
             return -self.left[0]
-        return (-self.left[0] + self.right[0]) / 2.0
+        else:
+            return (-self.left[0] + self.right[0]) / 2.0
 
 
 # Your MedianFinder object will be instantiated and called as such:
