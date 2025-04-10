@@ -1,55 +1,30 @@
-from threading import Thread, Lock
-import time
-import sys
+import threading
 
-# Override print for thread-safe output
-print = lambda x: sys.stdout.write("%s\n" % x)
-
-# Global Lock
-lock = Lock()
-
-def render_3D_model():
-    print("Rendering waiting for lock...⏳")
-    lock.acquire()
-    print("Rendering got lock...rendering...♻️")
+class Logger():
+    # private attributes
+    __lock = threading.Lock()
+    __instance = None
     
-    time.sleep(2)  # heavy computation
     
-    lock.release()
-    print("Rendering released lock...👍")
-
-def upload_model_dbms():
-    print("DBMS uploader waiting for lock...⏳")
-    lock.acquire()
-    print("DBMS uploader got lock...transferring data...⬆️")
+    def __new__(cls):
+        with cls.__lock:
+            if not cls.__instance:
+                print("Making Logger instance...⭕")
+                
+                # sending cls to Object class (which is the parent)
+                # to make a object of the class cls
+                cls.__instance = super().__new__(cls)
+            return cls.__instance
     
-    time.sleep(5)  # heavy computation
-    
-    lock.release()
-    print("DBMS uploader released lock...👍")
+    # public 
+    def log(self, e, msg):
+        print(f"[{e}]: {msg}")
 
-# Making the threads  
-t1 = Thread(target=render_3D_model)
-t2 = Thread(target=upload_model_dbms)
-t3 = Thread(target=render_3D_model)
-t4 = Thread(target=render_3D_model)
-t5 = Thread(target=upload_model_dbms)
-t6 = Thread(target=upload_model_dbms)
+l1 = Logger()
+l2 = Logger()
 
-# Start threads
-t1.start()
-t2.start()
-t3.start()
-t4.start()
-t5.start()
-t6.start()
+# check if same instance
+print(l1 is l2)
 
-# Wait for threads to complete
-t1.join()
-t2.join()
-t3.join()
-t4.join()
-t5.join()
-t6.join()
-
-print("Main Thread ended")
+l1.log("l1", "Hello, Is the logger working?")
+l2.log("l2", "Wordl, Yes it is working fine.")
