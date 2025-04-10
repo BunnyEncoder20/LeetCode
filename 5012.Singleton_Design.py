@@ -1,23 +1,32 @@
 import threading
 
-class Logger:
-    _instance = None
-    _lock = threading.Lock()
-
+class Logger():
+    # private attributes
+    __lock = threading.Lock()
+    __instance = None
+    
+    
     def __new__(cls):
-        with cls._lock:
-            if cls._instance is None:
-                print("Creating new Logger instance...")
-                cls._instance = super().__new__(cls)
-            return cls._instance
+        # double checking lock (cause locks are expensive)
+        if not __instance:
+            with cls.__lock:
+                if not cls.__instance:
+                    print("Making Logger instance...⭕")
+                    
+                    # sending cls to Object class (which is the parent)
+                    # to make a object of the class cls
+                    cls.__instance = super().__new__(cls)
+                return cls.__instance
+    
+    # public 
+    def log(self, e, msg):
+        print(f"[{e}]: {msg}")
 
-    def log(self, message):
-        print(f"[LOG]: {message}")
+l1 = Logger()
+l2 = Logger()
 
-# Usage
-logger1 = Logger()
-logger2 = Logger()
+# check if same instance
+print(l1 is l2)
 
-print(logger1 is logger2)  # True, both are same instance
-logger1.log("User logged in")
-logger2.log("User clicked checkout")
+l1.log("l1", "Hello, Is the logger working?")
+l2.log("l2", "Wordl, Yes it is working fine.")
