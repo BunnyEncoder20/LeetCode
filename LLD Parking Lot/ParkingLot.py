@@ -1,6 +1,6 @@
 from typing import List 
-# from level import Level
-# from vehichle import Vehicle
+from level import Level
+from vehichle import Vehicle
 
 class ParkingLot:
     _instance = None
@@ -42,5 +42,5 @@ class ParkingLot:
     
     def display_availability(self) -> None:
         for level in self.levels:
-            print(f"Level[{level._id}]",level.getAvailability())
+            level.getAvailabilityReport()
         return
