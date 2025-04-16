@@ -20,38 +20,13 @@ class ParkingSpot:
         return self.parked_vehicle is None
     
     def park_vehicle(self, vehicle: Vehicle) -> None:
-        print(Fore.WHITE)
-        try:
-            if not self.isAvailable():
-                raise Exception(Fore.RED + "[ERROR]: This Spot is already Occupied")
-            
-            if self.spots_vehicle_type != vehicle.get_type():
-                raise Exception(Fore.RED + "[ERROR]: The vehicle type will not be able to park in this spot")
-            
-            # normally: All good, park the vehicle
-            self.parked_vehicle = vehicle
-            print(f"{Vehicle} parked.")
-            print(Style.RESET_ALL)
-            
-        except Exception as e:
-            return e
-        
+        self.parked_vehicle = vehicle
+        print(f"{Vehicle} parked.")
         return
     
     def unpark_vehicle(self) -> None:
-        print(Fore.WHITE)
-        try:
-            if self.isAvailable():
-                raise Exception(Fore.RED + "[ERROR]: This Spot is Empty")
-            
-            # normally: All good, clear the spot
-            self.parked_vehicle = None
-            print(f"{self._id} is now empty.")
-            print(Style.RESET_ALL)
-        
-        except Exception as e:
-            return e
-        
+        self.parked_vehicle = None
+        print(f"{self._id} is now empty.")
         return
          
             

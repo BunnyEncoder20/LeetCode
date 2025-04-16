@@ -1,6 +1,6 @@
 from typing import List 
 from level import Level
-from vehichle import Vehicle
+from vehicle import Vehicle
 
 class ParkingLot:
     _instance = None
@@ -12,7 +12,7 @@ class ParkingLot:
         return cls._instance
     
     def __init__(self):
-        if _instance is not None:
+        if self._instance is not None:
             raise Exception("[ERROR]:ParkingLot.__init__():Parking Lot can only have one instance !")
         else:
             # assigning singleton instance

@@ -1,7 +1,9 @@
 from typing import List 
-from colorama import Fore, Back, Style
 from parking_spot import ParkingSpot
 from vehicle import Vehicle
+
+from colorama import init, Fore, Back, Style
+init(autoreset=True)    # resets the styling after every print line
 
 class Level:
     def __init__(self, floor: int, num_spots: int):
@@ -10,7 +12,7 @@ class Level:
     
     def park_vehicle(self, vehicle: Vehicle) -> bool:
         for spot in self.parking_spots:
-            if spot.isAvailable() and spot.getType() == vehicle.getType():
+            if spot.isAvailable() and spot.get_spots_vehicle_type() == vehicle.get_type():
                 spot.park_vehicle(vehicle)
                 print(f"[Level]: parked {vehicle} at {self._id}-{spot._id}")
                 return True
@@ -18,18 +20,18 @@ class Level:
     
     def unpark_vehicle(self, vehicle: Vehicle) -> bool:
         for spot in self.parking_spots:
-            if not spot.isisAvailable() and spot.get_parkedVehicle() == vehicle:
+            if not spot.isAvailable() and spot.get_parked_vehicle() == vehicle:
                 spot.unpark_vehicle()
                 print(f"[Level]: {vehicle} left parking {self._id}-{spot._id}")
                 return True
         return False
     
-    def getAvailabilityReport() -> str:
+    def getAvailabilityReport(self) -> str:
         print(Fore.WHITE + f"Level {self._id} Availability:")
         for spot in self.parking_spots:
             if spot.isAvailable():
-                print(f"Spot {spot.get_spot_number()} is "+ Back.GREEN +"AVAILABLE")
+                print(Fore.WHITE + f"Spot {spot.get_id()} is "+ Back.GREEN +"AVAILABLE")
             else:
-                print(f"Spot {spot.get_spot_number()} is "+ Back.RED +"NOT AVAILABLE")
+                print(Fore.WHITE + f"Spot {spot.get_id()} is "+ Back.RED +"NOT AVAILABLE")
         print(Style.RESET_ALL)
                 

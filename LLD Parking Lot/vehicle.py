@@ -5,6 +5,9 @@ class Vehicle(ABC):
     def __init__(self, license_plate: str, vehicle_type: VehicleType):
         self.license_plate = license_plate
         self.type = vehicle_type
+    
+    def __str__(self):
+        return f"{self.license_plate} - {self.type}"
 
     def get_type(self) -> VehicleType:
         return self.type
