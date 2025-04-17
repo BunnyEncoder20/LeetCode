@@ -5,7 +5,7 @@ init(autoreset=True)
 
 class Board:
     def __init__(self):
-        self.grid = [["-" for _ in range(3)] for _ in range(3)]
+        self.grid = [[" " for _ in range(3)] for _ in range(3)]
         self.moves_count = 0
         self.winner = None
         
@@ -16,27 +16,31 @@ class Board:
         self.antidiag = 0
     
     def make_move(self, row, col, current_player: Player):
-        if self.grid[row][col] != "-": raise ValueError("❌ Position already marked")
+        if self.grid[row][col] != " ": raise ValueError("❌ Position already marked")
         
         # normally
-        self.grid[row][col] = "⭕" if current_player.get_symbol() == "O" else "❌"
+        self.grid[row][col] = "O" if current_player.get_symbol() == "O" else "X"
         self.moves_count += 1
         
         # update board metrics
         score = 1 if current_player.get_symbol() == "X" else -1
         self.rowsum[row] += score
         self.colsum[col] += score
-        self.diagsum += score
-        self.antidiag += score
+        if row == col: self.diagsum += score
+        if row+col == 2: self.antidiag += score
         
         # check if won
         if (
-            self.rowsum == 3 or
-            self.colsum == 3 or
-            self.diagsum == 3 or
-            self.antidiag == 3
+            abs(self.rowsum[row]) == 3 or
+            abs(self.colsum[col]) == 3 or
+            abs(self.diagsum) == 3 or
+            abs(self.antidiag) == 3
         ): 
             self.winner = current_player
+        print(f"[debug]:RS = {self.rowsum}")
+        print(f"[debug]:CS = {self.colsum}")
+        print(f"[debug]:DS = {self.diagsum}")
+        print(f"[debug]:AS = {self.antidiag}")
     
     def is_full(self):
         return self.moves_count == 9
@@ -47,4 +51,5 @@ class Board:
     def print_board(self):
         for row in range(3):
             print(Fore.WHITE + " | ".join(self.grid[row]))
+            if row != 2: print(Fore.WHITE + "----------")
         print()

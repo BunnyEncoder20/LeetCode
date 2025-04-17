@@ -13,7 +13,7 @@ class GameMaster:
         self.current_player = self.player1 # p1 starts
     
     def play(self):
-        # init the board
+        print("")
         self.board.print_board()
         
         while not self.board.is_full() and not self.board.get_winner():
@@ -45,7 +45,7 @@ class GameMaster:
         if self.board.is_full():
             print(Fore.LIGHTRED_EX + f"It is a draw 🙄")
         else:
-            print(Fore.LIGHTYELLOW_EX + f"{self.get_winner().get_name()} WINS 🥳")
+            print(Fore.LIGHTYELLOW_EX + f"{self.board.get_winner().get_name()} WINS 🥳")
                 
 
     def switch_player(self):
