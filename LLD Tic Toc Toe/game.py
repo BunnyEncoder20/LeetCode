@@ -42,10 +42,10 @@ class GameMaster:
                 print(Back.RED + str(E))
         
         # Someone Won or Board's full
-        if self.board.is_full():
-            print(Fore.LIGHTRED_EX + f"It is a draw 🙄")
-        else:
+        if self.board.get_winner():
             print(Fore.LIGHTYELLOW_EX + f"{self.board.get_winner().get_name()} WINS 🥳")
+        else:
+            print(Fore.LIGHTRED_EX + f"It is a draw 🙄")
                 
 
     def switch_player(self):

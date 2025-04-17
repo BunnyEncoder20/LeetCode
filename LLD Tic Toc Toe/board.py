@@ -37,10 +37,6 @@ class Board:
             abs(self.antidiag) == 3
         ): 
             self.winner = current_player
-        print(f"[debug]:RS = {self.rowsum}")
-        print(f"[debug]:CS = {self.colsum}")
-        print(f"[debug]:DS = {self.diagsum}")
-        print(f"[debug]:AS = {self.antidiag}")
     
     def is_full(self):
         return self.moves_count == 9
