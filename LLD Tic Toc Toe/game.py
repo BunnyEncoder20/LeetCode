@@ -1,3 +1,5 @@
+from board import Board
+
 from colorama import init, Fore, Back, Style
 init(autoreset=True)
 
@@ -12,7 +14,7 @@ class GameMaster:
     
     def play(self):
         # init the board
-        self.board.buildBoard()
+        self.board.print_board()
         
         while not self.board.is_full() and not self.board.get_winner():
             
@@ -46,16 +48,16 @@ class GameMaster:
             print(Fore.LIGHTYELLOW_EX + f"{self.get_winner().get_name()} WINS 🥳")
                 
 
-    def switchPlayer(self):
+    def switch_player(self):
         self.current_player = self.player2 if self.current_player == self.player1 else self.player1
     
     def validate(self, message):
         while True:
             try:
-                userInput = int(input(message, end=" "))
+                userInput = int(input(message))
                 if 0 <= userInput <= 2:
                     return userInput
                 else:
                     raise ValueError("Invalid input ! Please enter a number between 0 and 2")
             except ValueError as E:
-                print(Back.RED + E)
+                print(Back.RED + str(E))

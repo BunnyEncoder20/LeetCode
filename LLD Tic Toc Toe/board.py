@@ -5,7 +5,7 @@ init(autoreset=True)
 
 class Board:
     def __init__(self):
-        self.grid = [["_" for _ in range(3)] for _ in range(3)]
+        self.grid = [["-" for _ in range(3)] for _ in range(3)]
         self.moves_count = 0
         self.winner = None
         
@@ -16,7 +16,7 @@ class Board:
         self.antidiag = 0
     
     def make_move(self, row, col, current_player: Player):
-        if self.grid != "_": raise ValueError("❌ Position already marked")
+        if self.grid[row][col] != "-": raise ValueError("❌ Position already marked")
         
         # normally
         self.grid[row][col] = "⭕" if current_player.get_symbol() == "O" else "❌"

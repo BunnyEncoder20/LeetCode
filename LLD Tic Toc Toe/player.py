@@ -1,6 +1,6 @@
 class Player:
     def __init__(self, name: str, symbol: str):
-        self.namename = name
+        self.name = name
         self.symbol = symbol
     
     # getters
