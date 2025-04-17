@@ -1,4 +1,4 @@
-from game import Game 
+from game import GameMaster
 from player import Player
 
 class TicTacToe_Demo:
@@ -9,7 +9,7 @@ class TicTacToe_Demo:
         player2 = Player("Player2", 'O')
         
         # init game
-        game = Game(player1, player2)
+        game = GameMaster(player1, player2)
         game.play()
 
 if __name__ == '__main__':
