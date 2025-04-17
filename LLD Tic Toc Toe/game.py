@@ -1,4 +1,5 @@
 from colorama import init, Fore, Back, Style
+init(autoreset=True)
 
 from player import Player
 
@@ -13,7 +14,7 @@ class GameMaster:
         # init the board
         self.board.buildBoard()
         
-        while not self.board.is_full() and not self.board.has_winner():
+        while not self.board.is_full() and not self.board.get_winner():
             
             # Notify whose turn
             if self.current_player == self.player1:
@@ -27,7 +28,7 @@ class GameMaster:
 
             # try to mark on board
             try:
-                self.board.make_move(row, col, self.current_player.get_symbol())
+                self.board.make_move(row, col, self.current_player)
 
                 # display updated board
                 self.board.print_board()
@@ -39,12 +40,10 @@ class GameMaster:
                 print(Back.RED + str(E))
         
         # Someone Won or Board's full
-        if self.board.has_winner():
-            # the winner will be the previous move guy
-            self.switch_player()
-            print(Fore.LIGHTYELLOW_EX + f"{self.current_player.get_name()} WINS 🥳")
-        else:
+        if self.board.is_full():
             print(Fore.LIGHTRED_EX + f"It is a draw 🙄")
+        else:
+            print(Fore.LIGHTYELLOW_EX + f"{self.get_winner().get_name()} WINS 🥳")
                 
 
     def switchPlayer(self):
