@@ -1,7 +1,6 @@
 from vending_machine import VendingMachine
 from product import Product
-from coin import Coin
-from note import Note
+from static import Coin,Note
 
 class VendingMachineDemo:
     @staticmethod
@@ -9,9 +8,9 @@ class VendingMachineDemo:
         vending_machine = VendingMachine.get_instance()
 
         # Add products to the inventory
-        coke = Product("Coke", 1.5)
-        pepsi = Product("Pepsi", 1.5)
-        water = Product("Water", 1.0)
+        coke = Product("Coke", 25)
+        pepsi = Product("Pepsi", 20)
+        water = Product("Water", 10)
 
         vending_machine.inventory.add_product(coke, 5)
         vending_machine.inventory.add_product(pepsi, 3)
@@ -21,10 +20,10 @@ class VendingMachineDemo:
         vending_machine.select_product(coke)
 
         # Insert coins
-        vending_machine.insert_coin(Coin.QUARTER)
-        vending_machine.insert_coin(Coin.QUARTER)
-        vending_machine.insert_coin(Coin.QUARTER)
-        vending_machine.insert_coin(Coin.QUARTER)
+        vending_machine.insert_coin(Coin.FIVE_COIN)
+        vending_machine.insert_coin(Coin.FIVE_COIN)
+        vending_machine.insert_coin(Coin.FIVE_COIN)
+        vending_machine.insert_coin(Coin.FIVE_COIN)
 
         # Insert a note
         vending_machine.insert_note(Note.FIVE)
