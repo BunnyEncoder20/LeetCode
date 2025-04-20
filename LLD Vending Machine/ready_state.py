@@ -11,7 +11,7 @@ class ReadyState(VendingMachineState):
     
     def insert_coin(self, coin: Coin):
         self.vending_machine.add_coin(coin)
-        print(f"Coint inserted: {coin.name}")
+        print(f"Coin inserted: {coin.name}")
         self.check_payment_status()
     
     def insert_note(self, note: Note):

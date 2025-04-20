@@ -7,7 +7,7 @@ from product import Product
 from vending_machine_state import VendingMachineState
 from idle_state import IdleState
 from ready_state import ReadyState
-from despense_state import DispenseState
+from dispense_state import DispenseState
 from return_change_state import ReturnChangeState
 
 # enums
@@ -58,7 +58,7 @@ class VendingMachine:
         self.current_state = state
     
     def add_coin(self, coin: Coin):
-        self.total_payment += coin.value
+        self.total_payment += coin.
     
     def add_note(self, note: Note):
         self.total_payment += note.value

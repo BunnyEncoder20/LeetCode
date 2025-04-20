@@ -1,7 +1,6 @@
 from vending_machine_state import VendingMachineState
 from product import Product 
-from coin import Coin
-from note import Note
+from static import Coin, Note
 
 class IdleState(VendingMachineState):
     def __init__(self, instance):
