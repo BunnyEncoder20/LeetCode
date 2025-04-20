@@ -26,7 +26,7 @@ class VendingMachine:
                 
                 cls._instance.idle_state = IdleState(cls._instance)
                 cls._instance.ready_state = ReadyState(cls._instance)
-                cls._instance.despense_state = DispenseState(cls._instance)
+                cls._instance.dispense_state = DispenseState(cls._instance)
                 cls._instance.return_change_state = ReturnChangeState(cls._instance)
                 cls._instance.current_state = cls._instance.idle_state
                 
@@ -58,7 +58,7 @@ class VendingMachine:
         self.current_state = state
     
     def add_coin(self, coin: Coin):
-        self.total_payment += coin.
+        self.total_payment += coin.value
     
     def add_note(self, note: Note):
         self.total_payment += note.value
@@ -67,4 +67,4 @@ class VendingMachine:
         self.total_payment = 0.0
         
     def reset_selected_product(self):
-        self.select_product = None
+        self.selected_product = None

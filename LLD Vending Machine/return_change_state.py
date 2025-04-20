@@ -19,10 +19,10 @@ class ReturnChangeState(VendingMachineState):
         print("Product already dispensed. Please collect the change first")
     
     def return_change(self):
-        change = self.vending_machine.total_payment - self.vending_machine.selected_product.price
+        change = self.vending_machine.total_payment
         
         if change > 0:
-            print(f"Chang returned: ₹{change:.2f}")
+            print(f"Change returned: ₹{change:.2f}")
             self.vending_machine.reset_payment()
         else:
             print("No change to return")

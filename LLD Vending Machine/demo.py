@@ -20,16 +20,16 @@ class VendingMachineDemo:
         vending_machine.select_product(coke)
 
         # Insert coins
-        vending_machine.insert_coin(Coin.FIVE_COIN)
-        vending_machine.insert_coin(Coin.FIVE_COIN)
-        vending_machine.insert_coin(Coin.FIVE_COIN)
-        vending_machine.insert_coin(Coin.FIVE_COIN)
+        vending_machine.insert_coin(Coin.FIVE)
+        vending_machine.insert_coin(Coin.FIVE)
+        vending_machine.insert_coin(Coin.FIVE)
+        vending_machine.insert_coin(Coin.FIVE)
 
         # Insert a note
         vending_machine.insert_note(Note.FIVE)
 
         # Dispense the product
-        vending_machine.dispense_product()
+        vending_machine.dispense()
 
         # Return change
         vending_machine.return_change()
@@ -38,19 +38,16 @@ class VendingMachineDemo:
         vending_machine.select_product(pepsi)
 
         # Insert insufficient payment
-        vending_machine.insert_coin(Coin.QUARTER)
+        vending_machine.insert_coin(Coin.TEN)
 
         # Try to dispense the product
-        vending_machine.dispense_product()
+        vending_machine.dispense()
 
-        # Insert more coins
-        vending_machine.insert_coin(Coin.QUARTER)
-        vending_machine.insert_coin(Coin.QUARTER)
-        vending_machine.insert_coin(Coin.QUARTER)
-        vending_machine.insert_coin(Coin.QUARTER)
+        # Insert more money
+        vending_machine.insert_note(Note.FIVTY)
 
         # Dispense the product
-        vending_machine.dispense_product()
+        vending_machine.dispense()
 
         # Return change
         vending_machine.return_change()

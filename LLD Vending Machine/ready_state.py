@@ -19,7 +19,7 @@ class ReadyState(VendingMachineState):
         print(f"Inserted note: {note.name}")
         self.check_payment_status()
         
-    def dispense_product(self, product: Product):
+    def dispense_product(self):
         print("[ERROR] Please complete payment first")
     
     def return_change(self):
