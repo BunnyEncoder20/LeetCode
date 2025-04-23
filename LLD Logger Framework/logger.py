@@ -28,7 +28,7 @@ class Logger:
             self.config.get_log_appender().append(log_msg)
         
     def debug(self, message):
-        selflog(LogLevel.DEBUG, message)
+        self.log(LogLevel.DEBUG, message)
     
     def info(self, message):
         self.log(LogLevel.INFO, message)
