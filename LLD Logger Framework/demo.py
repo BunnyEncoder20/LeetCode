@@ -6,7 +6,7 @@ from file_appender import FileAppender
 class LoggingFramework_Demo:
     @staticmethod
     def run():
-        logger = Logger.get_intance()
+        logger = Logger.get_instance()
         
         # Logging with default config
         logger.info('This is an information message')
@@ -14,7 +14,7 @@ class LoggingFramework_Demo:
         logger.error("This is an error message")
 
         # Changing the log level and appender
-        config = LoggerConfig(LogLevel.DEBUG, FileAppender("app.log"))
+        config = LoggerConfig(LogLevel.DEBUG, FileAppender("/Users/varunverma/Code/LeetCode/LLD Logger Framework/app.log"))
         logger.set_config(config)
         
         # Logging with new config 
@@ -22,4 +22,4 @@ class LoggingFramework_Demo:
         logger.info("This is a information message")
 
 if __name__ == "__main__":
-    LoggingFrameworkDemo.run()
+    LoggingFramework_Demo.run()

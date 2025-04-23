@@ -11,7 +11,7 @@ class Logger:
            raise Exception("Logger is singleton!") 
         else:
             Logger._instance = self
-            self.config = LoggerConfig(LogLevel.INFO, ConsoleWriter)
+            self.config = LoggerConfig(LogLevel.INFO, ConsoleAppender())
     
     @classmethod
     def get_instance(cls):
@@ -23,7 +23,7 @@ class Logger:
         self.config = config
     
     def log(self, level, message):
-        if level.value >= self.config.get_log_level().value():
+        if level.value >= self.config.get_log_level().value:
             log_msg = LogMessage(level, message)
             self.config.get_log_appender().append(log_msg)
         

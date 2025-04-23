@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-class LogAppender(ABD):
+class LogAppender(ABC):
     @abstractmethod
     def append(self, log_message):
         pass
