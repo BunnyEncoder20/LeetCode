@@ -1,4 +1,4 @@
-from snaked import Snake
+from snake import Snake
 from ladder import Ladder
 
 class Board:
