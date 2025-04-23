@@ -1,7 +1,7 @@
 from logger import Logger
 from logger_config import LoggerConfig
 from log_level import LogLevel
-from file_writer import FileWriter
+from file_appender import FileAppender
 
 class LoggingFramework_Demo:
     @staticmethod
@@ -13,7 +13,7 @@ class LoggingFramework_Demo:
         logger.warning("This is a warning message")
         logger.error("This is an error message")
 
-        # Changing the log level and writer
+        # Changing the log level and appender
         config = LoggerConfig(LogLevel.DEBUG, FileAppender("app.log"))
         logger.set_config(config)
         
