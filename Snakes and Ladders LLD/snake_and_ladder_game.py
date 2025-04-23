@@ -3,10 +3,14 @@ from dice import Dice
 from player import Player
 
 class SnLGame:
+    _game_count = 0
+
     def __init__(self, player_names):
+        SnLGame._game_count += 1
+        self._gameID = SnLGame._game_count
         self.board = Board()
         self.dice = Dice()
-        self.players = [Player(name) for names in player_names]
+        self.players = [Player(name) for name in player_names]
         self.current_player_idx = 0
     
     def play(self):
@@ -16,11 +20,11 @@ class SnLGame:
             new_position = current_player.get_position() + dice_num
             
             if new_position <= self.board.get_board_size():
-                current_player.set_position(self.board.get_position_after_snake_or_ladder(new_position))
-                print(f"{current_player.get_name()} rolled a {dice_num} and moved to position {current_player.get_position()}")
+                current_player.set_position(self.board.get_new_position_after_snakes_or_ladder(new_position))
+                print(f"[Game:{self._gameID}]: {current_player.get_name()} rolled a {dice_num} and moved to position {current_player.get_position()}")
 
             if current_player.get_position() == self.board.get_board_size():
-                print(f"🥳 {current_player.get_name()} WINS !!! ")
+                print(f"[Game:{self._gameID}]: 🥳 {current_player.get_name()} WINS !!! ")
                 break
             
             self.current_player_idx = (self.current_player_idx + 1) % len(self.players)

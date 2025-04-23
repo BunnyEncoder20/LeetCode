@@ -9,7 +9,7 @@ class SnakeAndLadderDemo:
         game_master.start_new_game(players_group1)
         
         players_group2 = ["Player 4", "Player 5"]
-        game_manager.start_new_game(players2)
+        game_master.start_new_game(players_group2)
 
 if __name__ == "__main__":
     SnakeAndLadderDemo.run()

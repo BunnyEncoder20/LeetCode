@@ -1,11 +1,13 @@
-from threading import Thread
+from threading import Thread, Lock
 from snake_and_ladder_game import SnLGame
 
 class GameMaster:
     _instance = None
     _lock = Lock()
+    _game_count = 0
     
     def __init__(self):
+        self.game_id = GameMaster._game_count
         self.games = []
         
     @classmethod

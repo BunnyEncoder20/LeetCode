@@ -30,9 +30,9 @@ class Board:
     def get_new_position_after_snakes_or_ladder(self, position):
         for snake in self.snakes:
             if snake.get_head() == position:
-                return self.get_tail()
+                return snake.get_tail()
         
-        for ladder in self.ladders():
+        for ladder in self.ladders:
             if ladder.get_bottom() == position:
                 return ladder.get_top()
         
