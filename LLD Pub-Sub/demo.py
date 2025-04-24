@@ -19,7 +19,7 @@ class PubSubSystem_Demo:
         subscriber2 = ConsoleSubscriber("Subscriber2")
         subscriber3 = ConsoleSubscriber("Subscriber3")
 
-        # Subsriber to topics
+        # Subscriber to topics
         pub_sub_system.subscribe("Bikes", subscriber1)
         pub_sub_system.subscribe("Cars", subscriber1)
         pub_sub_system.subscribe("Cars", subscriber2)
@@ -47,7 +47,7 @@ class PubSubSystem_Demo:
         pub2.publish(Message("Chinese cars are insanly good. Especially EVs"))
         pub3.publish(Message("American State Type Pizza's (Detroit/Chicago) have cheese under the sause"))
 
-        # shutfown the system 
+        # shutdown the system 
         pub_sub_system.shutdown()
         
 if __name__ == "__main__":
