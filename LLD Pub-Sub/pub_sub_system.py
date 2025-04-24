@@ -15,13 +15,13 @@ class PubSubSystem:
         print(f"[Pub-Sub]: {topic_name} Topic created")
 
     def subscribe(self, topic_name, subscriber):
-        topic = sef.topics.get(topic_name)
+        topic = self.topics.get(topic_name)
         if topic:
             topic.add_subscriber(subscriber)
             print(f"[Pub-Sub]: {subscriber} subbed to {topic_name} Topic")
 
         
-    def unsubscriber(self, topic_name, subscriber):
+    def unsubscribe(self, topic_name, subscriber):
         topic = self.topics.get(topic_name)
         if topic:
             topic.remove_subscriber(subscriber)

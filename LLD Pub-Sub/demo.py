@@ -1,4 +1,4 @@
-from consoleSubscriber import ConsoleSubscriber
+from console_subscriber import ConsoleSubscriber
 from message import Message 
 from publisher import Publisher
 from pub_sub_system import PubSubSystem
@@ -51,4 +51,4 @@ class PubSubSystem_Demo:
         pub_sub_system.shutdown()
         
 if __name__ == "__main__":
-    PubSubSystem.run()
+    PubSubSystem_Demo.run()
