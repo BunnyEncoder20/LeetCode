@@ -1,40 +1,35 @@
-class Solution:
-    def mergeSort(self, nums):
-        n = len(nums)
-        self.divider(nums, 0, n-1)
-        return nums
-    
-    def divider(self, nums, low, high):
-        # base case 
-        if low >= high: return
+class StackQueue:
+    def __init__(self):
+        self.st1 = []
+        self.st2 = []
 
-        # find mid and divide
-        mid = (low+high)//2
-        self.divider(nums, low, mid)
-        self.divider(nums, mid+1, high)
+    def push(self, x):
+        while self.st1:
+            self.st2.append(self.st1.pop())
 
-        # merge halfs
-        self.merger(nums, low, mid, high)
+        # Insert new element
+        self.st1.append(x)
 
-    def merger(self, nums, low, mid, high):
-        temp = []
-        left = low 
-        right = mid+1
+        while self.st2:
+            self.st1.append(self.st2.pop())
 
-        while left <= mid and right<=high:
-            if nums[left] <= nums[right]:
-                temp.append(nums[left])
-                left += 1
-            else:
-                temp.append(nums[right])
-                right += 1
+    def pop(self):
+        # Edge case
+        if not self.st1:
+            print("Stack is empty")
+            return -1 
 
-        while left <= mid:
-            temp.append(nums[left])
-            left += 1
-        while right <= high:
-            temp.append(nums[right])
-            right += 1
+        # pop top element
+        return self.st1.pop()
 
-        for i in range(low, high+1):
-            nums[i] = temp[i-low]
+    def peek(self):
+        # Edge case
+        if not self.st1:
+            print("Stack is empty")
+            return -1
+
+        # Return the top element
+        return self.st1[-1]
+
+    def is_empty(self):
+        return not self.st1
