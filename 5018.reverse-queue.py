@@ -1,18 +1,18 @@
 from queue import Queue
 class Solution:
-    #Function to reverse the queue.
-    def reverseQueue(self, q):
-        stack = []
-        
-        while not q.empty():
-            stack.append(q.get())
-            
-        while stack:
-            q.put(stack.pop())
-        
-        return q
+    def reverseQueue(self, q:Queue):
+        # base case
+        if q.empty(): return
+
+        front = q.get()
+        self.reverseQueue(q)
+        q.put(front)
+        return
 
 if __name__ == "__main__":
     q = Queue()
     elements = [4,3,1,10,2,6]
-    print(Solution().reverseQueue(q))
+    for e in elements: q.put(e)
+    Solution().reverseQueue(q)
+    while not q.empty():
+        print(q.get(), end=" - ")
