@@ -13,16 +13,15 @@
 
 class Solution:
     def hasCycle(self, head: Optional[ListNode]) -> bool:
-        bunny = head
-        tortoise = head
+        hare, tortoise = head, head 
         
-        while bunny and bunny.next:
+        while hare and hare.next:
             tortoise = tortoise.next
-            bunny = bunny.next.next
+            hare = hare.next.next
             
-            if tortoise == bunny:
+            if tortoise == hare:
                 return True
-        
+
         return False
         
 # @lc code=end
