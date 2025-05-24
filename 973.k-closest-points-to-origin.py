@@ -8,15 +8,8 @@
 import heapq
 class Solution:
     def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
-        minheap = []
-        for x,y in points:
-            heapq.heappush(minheap, ((x**2 + y**2), [x,y]))
-        res = []
-        while k:
-            res.append(heapq.heappop(minheap)[1])
-            k -= 1
-        return res
-            
+        points.sort(key = lambda pt: (pt[0]**2 + pt[1]**2))
+        return points[:k]
         
 # @lc code=end
 
