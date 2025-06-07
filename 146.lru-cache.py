@@ -20,54 +20,80 @@ class LRUCache:
         self.tail = Node()
         self.head.next = self.tail
         self.tail.prev = self.head
-        
         self.mpp = {}
     
     def connectAtHead(self,node):
-        back = self.head
-        front = self.head.next
+        # get surr nodes
+        headnext = self.head.next
         
-        back.next = node
-        node.prev = back
-        node.next = front
-        front.prev = node
-        return 
+        # conn
+        self.head.next = node
+        node.next  = headnext
+        headnext.prev = node
+        node.prev = self.head
     
     def disconnect(self,node):
-        back = node.prev
-        front = node.next
-        back.next = front
-        front.prev = back
-        return 
+        # get surr node 
+        prevnode = node.prev
+        nextnode = node.next
+        
+        # diconnect node
+        node.next = None
+        node.prev = None
+        
+        # connect next and prev
+        if prevnode:
+            prevnode.next = nextnode
+        if nextnode:
+            nextnode.prev = prevnode
         
 
     def get(self, key: int) -> int:
-        if key not in self.mpp: return -1
-        node = self.mpp[key]
-        # update to MRU
-        self.disconnect(node)
-        self.connectAtHead(node)
-        return node.val
+        # edge case
+        if key not in self.mpp.keys():
+            return -1
+        
+        # get node
+        n = self.mpp[key]
+
+        # make MRU
+        self.disconnect(n)
+        self.connectAtHead(n)
+
+        # return
+        return n.val
         
 
     def put(self, key: int, value: int) -> None:
-        # if node already present, update the value
-        if key in self.mpp:
-            node = self.mpp[key]
-            node.val = value
-            self.disconnect(node)
-            self.connectAtHead(node)
-        else: 
-            if self.capacity == len(self.mpp):
-                # remove lru
+        if key in self.mpp.keys():
+            # update val of node
+            oldnode = self.mpp[key]
+            oldnode.val = value
+            
+            # make MRU
+            self.disconnect(oldnode)
+            self.connectAtHead(oldnode)
+            
+            
+        else:
+            # check if DLL at capacity 
+            if len(self.mpp) == self.capacity:
+                # remove LRU
                 lru = self.tail.prev
-                self.disconnect(lru)
-                del self.mpp[lru.key]
-
-            node = Node(key, value)
-            self.mpp[key] = node
-            self.connectAtHead(node)
+                self.disconnect(lru)        # del from DLL
+                del self.mpp[lru.key]       # del from mpp
+                
+            # make new node
+            newnode = Node(key, value)
+            
+            # conn
+            self.connectAtHead(newnode)
+            
+            # entry into mpp
+            self.mpp[key] = newnode
+            
         return
+            
             
 
 
