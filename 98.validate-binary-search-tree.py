@@ -11,21 +11,20 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
-
-from typing import Optional
 class Solution:
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
         def validate(node, mini, maxi):
-            if not node:
+            # base case 
+            if node is None:
                 return True
-            if not (mini < node.val < maxi):
+            if not (mini<node.val<maxi):
                 return False
-            leftValid = validate(node.left, mini, node.val)
-            rightValid = validate(node.right, node.val, maxi)
             
-            return leftValid and rightValid
+            isLeftValid = validate(node.left, mini, node.val)
+            isRightValid = validate(node.right, ndoe.val, maxi)
+
+            return isLeftValid and isRightValid
         
-        return validate(root, float('-inf'), float('inf'))
-        
+        return validate(root, flaot('-inf'), float('inf'))
 # @lc code=end
 
