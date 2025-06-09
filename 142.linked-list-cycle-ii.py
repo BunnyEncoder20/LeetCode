@@ -13,29 +13,28 @@
 
 class Solution:
     def detectCycle(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        cycle = False
         slow, fast = head, head
         while fast and fast.next:
             slow = slow.next
             fast = fast.next.next
-            
-            # confirms cycle
+
+            # possible cycle
             if slow == fast:
-                cycle = True
                 break
         
-        if cycle:
-            # edge case where head is the pos 
-            if slow == fast == head: return head
-            
-            # make them meet again at the req pos
-            slow = head
-            while slow != fast:
-                slow = slow.next
-                fast = fast.next
-            return slow
-        else:
-            return None
+        # Runs only when we encounter break (while-else), 
+        # basically no cycle
+        else: return None
+
+        # find node from where loop starts
+        slow = head
+        
+        # when they collide again, it'll be at node
+        # where the loop starts
+        while slow != fast:
+            slow = slow.next
+            fast = fast.next
+        return slow
         
 # @lc code=end
 
