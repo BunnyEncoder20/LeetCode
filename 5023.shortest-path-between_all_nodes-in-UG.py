@@ -1,3 +1,4 @@
+from collections import deque
 class Solution:
     def shortestPath(self, edges, N, M):
         # make adj list 
