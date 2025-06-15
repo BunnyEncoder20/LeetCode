@@ -11,30 +11,35 @@
 #         self.val = x
 #         self.next = None
 
+from typing import Optional
 class Solution:
     def detectCycle(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        slow, fast = head, head
+        if head == None or head.next == None:
+            return None
+
+        slow, fast  = head, head
+        
         while fast and fast.next:
             slow = slow.next
             fast = fast.next.next
 
-            # possible cycle
             if slow == fast:
+                # cycle detected
                 break
-        
-        # Runs only when we encounter break (while-else), 
-        # basically no cycle
-        else: return None
 
-        # find node from where loop starts
+        if slow != fast: return None
+
         slow = head
-        
-        # when they collide again, it'll be at node
-        # where the loop starts
+        if slow == fast: return head
+
         while slow != fast:
             slow = slow.next
             fast = fast.next
+        
         return slow
+        
+        
+        
         
 # @lc code=end
 
