@@ -11,17 +11,19 @@
 #         self.val = x
 #         self.next = None
 
+from typing import Optional
 class Solution:
     def hasCycle(self, head: Optional[ListNode]) -> bool:
-        hare, tortoise = head, head 
+        slow, fast  = head, head
         
-        while hare and hare.next:
-            tortoise = tortoise.next
-            hare = hare.next.next
-            
-            if tortoise == hare:
-                return True
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
 
+            if slow == fast:
+                # cycle detected
+                return True
+        
         return False
         
 # @lc code=end
