@@ -8,44 +8,40 @@
 from collections import deque
 class Solution:
     def orangesRotting(self, grid: List[List[int]]) -> int:
-        m,n = len(grid), len(grid[0])
-        time = 0
-        freshOranges = 0
+        rows, cols = len(grid), len(grid[0])
+        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
         q = deque()
-        
-        # count fresh oranges &
-        # collect the rotten oranges into q
-        for i in range(m):
-            for j in range(n):
-                if grid[i][j] == 1:
-                    freshOranges += 1
-                elif grid[i][j] == 2:
-                   q.append((0, i, j))
-        
-        # func to check for adj fresh orange
-        def isValid(i,j):
+        fresh_count = 0
+
+        for i in range(rows):
+            for j in range(cols):
+                if grid[i][j] == 2:
+                    q.append((0, i, j))
+                elif grid[i][j] == 1:
+                    fresh_count += 1
+
+        def isValid(i, j):
             return (
-                0 <= i < m and 
-                0 <= j < n and 
+                0<=i<rows and 
+                0<=j<cols and 
                 grid[i][j] == 1
             )
-
-        # BFS
-        directions = [(0,1),(1,0),(-1,0),(0,-1)]
+        
+        global_time = 0
         while q:
             t, i, j = q.popleft()
-            time = max(t, time)
-            
+            global_time = max(global_time, t)
+
             for di, dj in directions:
-                newi, newj = i+di, j+dj
-                if isValid(newi, newj):
-                    grid[newi][newj] = 2
-                    freshOranges -= 1
-                    q.append((t+1, newi, newj))
+                ni, nj = i+di, j+dj
+
+                if isValid(ni, nj):
+                    grid[ni][nj] = 2
+                    fresh_count -= 1
+                    q.append((t+1, ni, nj))
         
-        if freshOranges == 0:
-            return time
-        else:
-            return -1
+        return global_time if fresh_count==0 else -1
+
+
 # @lc code=end
 
