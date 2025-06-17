@@ -10,25 +10,30 @@
 #     def __init__(self, val=0, next=None):
 #         self.val = val
 #         self.next = next
+from typing import List
 import heapq
 class Solution:
     def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
-        mergedHead = ListNode(-1)
-        minheap = []
-        temp = mergedHead
-        
-        for head in lists:
+        dummyhead = ListNode(-1)
+        temp = dummyhead
+        pq = []
+
+        if list is None: return None
+
+        for i, head in enumerate(lists):
             if head:
-                heapq.heappush(minheap, (head.val, id(head), head))
+                heapq.heappush(pq, (head.val, i, head))
         
-        while minheap:
-            val,_,node = heapq.heappop(minheap)
-            if node.next:
-                heapq.heappush(minheap, (node.next.val, id(node.next), node.next))
+        while pq:
+            val, i, node = heapq.heappop(pq)
+
             temp.next = node
             temp = temp.next
+
+            if node.next:
+                heapq.heappush(pq, (node.next.val, i, node.next))
         
-        return mergedHead.next
+        return dummyhead.next
             
         
 # @lc code=end
