@@ -6,21 +6,26 @@
 
 # @lc code=start
 from typing import List
-from collections import defaultdict
 
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-        mpp = [(nums[i], i) for i in range(len(nums))]
-        mpp.sort(key= lambda x: x[0])
+        ele_idx_mpp = sorted(
+            [[nums[i], i] for i in range(len(nums))],
+            key=lambda x: x[0]
+        )
+
         left, right = 0, len(nums)-1
-        
-        while left<right:
-            if mpp[left][0] + mpp[right][0] == target:
-                return [mpp[left][1], mpp[right][1]]
-            elif mpp[left][0] + mpp[right][0] < target:
+
+        while left<=right:
+            twosum = ele_idx_mpp[left][0] + ele_idx_mpp[right][0]
+
+            if twosum == target:
+                return [ele_idx_mpp[left][1], ele_idx_mpp[right][1]]
+            elif twosum < target:
                 left += 1
             else:
                 right -= 1
+
         
         return [-1,-1]
             
