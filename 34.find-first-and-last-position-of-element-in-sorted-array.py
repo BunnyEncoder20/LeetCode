@@ -5,42 +5,51 @@
 #
 
 # @lc code=start
+from typing import List
 class Solution:
     def searchRange(self, nums: List[int], target: int) -> List[int]:
-        if not nums: return [-1,-1]
-        
-        lb = self.lowerBound(nums, target)
-        ub = self.upperBound(nums, target)
-        
-        # if no occurance of element 
-        if lb == len(nums) or nums[lb] != target:
-            return [-1,-1]
+        first = self.first_bs(nums, target)
+        last = self.last_bs(nums, target)
 
-        return [lb, ub-1]
+        ans = [-1,-1]
+        if first != None: ans[0] = first
+        if last != None: ans[1] = last
 
-    def lowerBound(self, nums, target):
-        lb = len(nums)
-        low,high = 0, len(nums)-1
+        return ans
+    
+    def first_bs(self, arr, target):
+        low, high = 0, len(arr)-1
+        ans = None
+
         while low<=high:
             mid = (low+high)//2
-            if nums[mid] >= target:
-                lb = mid
+            
+            if arr[mid] == target:
+                ans = mid
                 high = mid-1
+            elif arr[mid] < target:
+                low = mid + 1
             else:
-                low = mid+1 
-        return lb
+                high = mid - 1
+        
+        return ans
+    
+    def last_bs(self, arr, target):
+        low, high = 0, len(arr)-1
+        ans = None
 
-    def upperBound(self, nums, target):
-        ub = len(nums)
-        low,high = 0, len(nums)-1
         while low<=high:
             mid = (low+high)//2
-            if nums[mid] > target:
-                ub = mid
-                high = mid-1
+            
+            if arr[mid] == target:
+                ans = mid
+                low = mid + 1
+            elif arr[mid] < target:
+                low = mid + 1
             else:
-                low = mid+1 
-        return ub
+                high = mid - 1
+        
+        return ans
                 
         
         
