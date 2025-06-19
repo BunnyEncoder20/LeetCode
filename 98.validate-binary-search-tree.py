@@ -11,20 +11,27 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
+from typing import Optional
 class Solution:
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
         def validate(node, mini, maxi):
             # base case 
             if node is None:
-                return True
-            if not (mini<node.val<maxi):
+                # reached end of subtree without violation 
+                return True  
+            
+            if not (mini < node.val < maxi):
+                # node val not following BST rules
                 return False
             
-            isLeftValid = validate(node.left, mini, node.val)
-            isRightValid = validate(node.right, ndoe.val, maxi)
+            # validate both left and right sub trees
+            leftValid = validate(node.left, mini, node.val)
+            rightValid = validate(node.right, node.val, maxi)
 
-            return isLeftValid and isRightValid
-        
-        return validate(root, flaot('-inf'), float('inf'))
+            # both should be True for sub tree to be valid itself
+            return leftValid and rightValid
+
+        # start recursive validate sub trees
+        return validate(root, float('-inf'), float('inf'))
 # @lc code=end
 
