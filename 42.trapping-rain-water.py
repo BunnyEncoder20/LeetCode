@@ -8,6 +8,7 @@
 from typing import List
 class Solution:
     def trap(self, height: List[int]) -> int:
+        # 2 pointers approach
         left, right = 0, len(height)-1
         leftMax, rightMax = 0, 0
         trapped_rainwater = 0
