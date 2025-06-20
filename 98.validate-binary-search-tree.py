@@ -21,7 +21,7 @@ class Solution:
                 return True  
             
             if not (mini < node.val < maxi):
-                # node val not following BST rules
+                # node val not following BST rule   s
                 return False
             
             # validate both left and right sub trees
