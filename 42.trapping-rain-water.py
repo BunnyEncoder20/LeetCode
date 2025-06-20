@@ -8,31 +8,24 @@
 from typing import List
 class Solution:
     def trap(self, height: List[int]) -> int:
-        n = len(height)
-        leftMaxHeight = self.getPrefixHash(height, n)
-        rightMaxHeight = self.getSuffixHash(height, n)
-
+        left, right = 0, len(height)-1
+        leftMax, rightMax = 0, 0
         trapped_rainwater = 0
-        for i in range(1,n-1):
-            water = min(leftMaxHeight[i], rightMaxHeight[i]) - height[i]
-            if water > 0:
-                trapped_rainwater += water
 
+        while left<right:
+            if height[left] <= height[right]:
+                if height[left] < leftMax:
+                    trapped_rainwater += leftMax - height[left]
+                else:
+                    leftMax = height[left]
+                left += 1
+            else:
+                if height[right] < rightMax:
+                    trapped_rainwater += rightMax - height[right]
+                else:
+                    rightMax = height[right]
+                right -= 1
+        
         return trapped_rainwater
-
-    def getPrefixHash(self, arr, n):
-        prefixHash = [0]*n 
-        prefixHash[0] = arr[0]
-        for i in range(1,n): 
-            prefixHash[i] = max(arr[i], prefixHash[i-1])
-        return prefixHash
-
-    def getSuffixHash(self, arr, n):
-        suffixHash = [0]*n
-        suffixHash[n-1] = arr[n-1]
-        for i in range(n-2, -1, -1):
-            suffixHash[i] = max(arr[i], suffixHash[i+1])
-        return suffixHash
-
 # @lc code=end
 
