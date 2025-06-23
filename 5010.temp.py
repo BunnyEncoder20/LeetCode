@@ -1,44 +1,90 @@
-from typing import List
-from collections import deque
-
 class Solution:
-    def shortestPathBinaryMatrix(self, grid: List[List[int]]) -> int:
-        n,m = len(grid), len(grid[0])
+    # Mappings
+    ones_map = {
+        1: "One",
+        2: "Two",
+        3: "Three",
+        4: "Four",
+        5: "Five",
+        6: "Six",
+        7: "Seven",
+        8: "Eight",
+        9: "Nine",
+        10: "Ten",
+        11: "Eleven",
+        12: "Twelve",
+        13: "Thirteen",
+        14: "Fourteen",
+        15: "Fifteen",
+        16: "Sixteen",
+        17: "Seventeen",
+        18: "Eighteen",
+        19: "Nineteen"
+    }
 
-        # trivial case: src or destination node blocked
-        if grid[0][0] == 1 and grid[n-1][m-1] == 1: return -1
+    tens_map = {
+        2: "Twenty",
+        3: "Thirty",
+        4: "Forty",
+        5: "Fifty",
+        6: "Sixty",
+        7: "Seventy",
+        8: "Eighty",
+        9: "Ninety",
+    }
 
-        directions = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)]
-        dist = [[float('inf')]*m for _ in range(n)]
-        q = deque()
+    def numberToWords(self, num: int) -> str:
+        place_suffixes = ["", " Thousand", " Million", " Billion"]
+
+        # trivial case
+        if num == 0:
+            return "Zero"
         
-        def isValid(i, j):
-            '''func to check if cell valid path cell'''
-            return (
-                0<=i<n and 
-                0<=j<m and 
-                grid[i][j] == 0
-            )
-        
-        # enque src ndoe
-        dist[0][0] = 1
-        q.append((1,0,0))
 
-        # BFS grid
-        while q:
-            distance, i, j = q.popleft()
+        resultant = ""
+        i = 0
+
+        while num:
+            last3digit = num % 1000
             
-            # check if reached destination
-            if i == n-1 and j == m-1:
-                return distance
-
-            for di, dj in directions:
-                ni, nj = i+di, j+dj 
-                if isValid(ni, nj) and distance + 1 < dist[ni][nj]:
-                    dist[ni][nj] = distance + 1
-                    q.append((distance+1, ni, nj))
+            # there might be 000 block
+            if last3digit:
+                p1 = self.tripleDigit_convertor(last3digit)
+                p2 = place_suffixes[i]
+                resultant = p1 + p2 + resultant
+            
+            i += 1
+            num //= 1000
         
-        # path not found
-        return -1
+        # strip trailing whitespaces
+        return resultant.strip()
 
-print(Solution().shortestPathBinaryMatrix([[0,0,0],[1,1,0],[1,1,0]]))
+        
+    
+    def tripleDigit_convertor(self, n):
+        res = ""
+        hundredth_place, tenth_once_place = divmod(n, 100)
+
+        # hundredth place might be a 0
+        if hundredth_place:
+            res += " " + Solution.ones_map[hundredth_place] + " Hundred"
+        
+        # check if last 2 places are above or below 20
+        # will need diff mapping for each
+        if tenth_once_place >= 20:
+            tenth_place, ones_place = divmod(tenth_once_place, 10)
+            
+            # diffinately something in tenth place
+            res += " "+Solution.tens_map[tenth_place]
+            
+            # ones place might be 0
+            if ones_place: res += " " + Solution.ones_map[ones_place]
+        
+        # only non-zero last 2 digits
+        elif tenth_once_place:
+            res += " " + Solution.ones_map[tenth_once_place]
+
+        return res
+
+
+Solution().numberToWords(100)
