@@ -12,10 +12,18 @@ class Solution:
         results = defaultdict(list)
 
         for word in words:
-            group_key = tuple(sorted(word))
-            results[group_key].append(word)
+            # count vector
+            count = [0]*26  # a....z counts
+            
+            for ch in word:
+                # count[ch_idx] += 1
+                count[ord(ch) - ord('a')] += 1
+            
+            key = tuple(count)  # non hashable list cannot be dict key
+            results[key].append(word)
         
         return list(results.values())
+            
                     
 
 # @lc code=end
