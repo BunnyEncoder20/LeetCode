@@ -8,7 +8,7 @@
 class Solution:
     def intToRoman(self, num: int) -> str:
         # mapping (will be going from MSB to LSB)
-        val_roman_mapping = [
+        value_symbol_mapping = [
             (1000, 'M'),(900, 'CM'),(500, 'D'), 
             (400, 'CD'),(100, 'C'), (90, 'XC'), 
             (50, 'L'),  (40, 'XL'), (10, 'X'),
@@ -17,7 +17,7 @@ class Solution:
         ]
 
         resultant = ""
-        for value, symbol in val_roman_mapping:
+        for value, symbol in value_symbol_mapping:
             # 2000 // 1000 = multiple x RN
             # = 2 * 'M = 'MM'
             # if multiple = 0, no symbol will be added
