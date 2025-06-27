@@ -7,28 +7,29 @@
 # @lc code=start
 class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
-        def recursive(open, closed):
-            # base case : open == closed == n
-            if open == closed == n:
+        stack = []
+        res = []
+
+        def backtracking(opening, closing):
+            # base case
+            if opening == closing == n:
                 res.append("".join(stack))
                 return 
             
-            # normally
-            # can only add open if open < n
-            if open < n:
-                stack.append("(")
-                recursive(open+1, closed)
-                stack.pop()     # backtrack
-            
-            # can only add closed if closed < open
-            if closed < open:
-                stack.append(")")
-                recursive(open, closed+1)
+            # can insert opening bracket
+            if opening < n:
+                stack.append('(')
+                backtracking(opening+1, closing)
                 stack.pop()
-        
-        stack = []
-        res = []
-        recursive(0,0)
+            
+            # can insert closing bracket
+            if closing < n:
+                stack.append(')')
+                backtracking(opening,closing+1)
+                stack.pop()
+
+
+        backtracking(0,0)
         return res
         
 # @lc code=end
