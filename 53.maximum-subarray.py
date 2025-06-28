@@ -5,24 +5,22 @@
 #
 
 # @lc code=start
+from typing import List
 class Solution:
     def maxSubArray(self, nums: List[int]) -> int:
-      maxsum = float('-inf')
-      sum = 0
-      start, ansStart, ansEnd = 0, 0, 0
-      
-      for i in range(len(nums)):
-        sum += nums[i]
-        if sum > maxsum:
-          maxsum = sum
-          ansStart = start
-          ansEnd = i
-          
-        if sum < 0:
-          sum = 0
-          start = i+1
-      
-      return [ansStart, ansEnd]
+        sum = 0
+        maxi = float('-inf')
+        
+        for num in nums:
+            sum += num 
+            
+            if sum > maxi:
+                maxi = sum 
+            if sum < 0:
+                sum = 0
+        
+        return maxi
+
             
           
 # @lc code=end
