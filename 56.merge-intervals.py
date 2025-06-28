@@ -5,22 +5,26 @@
 #
 
 # @lc code=start
+from typing import List
 class Solution:
     def merge(self, intervals: List[List[int]]) -> List[List[int]]:
+        # sort intervals according to start times
         intervals.sort()
         ans = []
-        
-        for start,end in intervals:
-            # if ans is empty, or 
-            # starting of new interval
-            if not ans or ans[-1][1] < start:
-                ans.append([start, end])
 
-            # overlapping: merge with last interval
+        for start, end in intervals:
+            
+            # non overlapping
+            if not ans or ans[-1][1]<start:
+                ans.append([start, end])
+            
+            # overlapping
             else:
-                ans[-1][1] = max(ans[-1][1], end)
-                
+                ans[-1][1] = max(end, ans[-1][1])
+        
         return ans
+
+        
             
             
         
