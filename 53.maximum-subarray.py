@@ -13,15 +13,10 @@ class Solution:
         
         for num in nums:
             sum += num 
-            
-            if sum > maxi:
-                maxi = sum 
-            if sum < 0:
-                sum = 0
+            if sum > maxi: maxi = sum 
+            if sum < 0: sum = 0
         
-        return maxi
-
-            
+        return maxi        
           
 # @lc code=end
 
