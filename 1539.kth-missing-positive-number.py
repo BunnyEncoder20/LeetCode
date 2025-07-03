@@ -7,16 +7,25 @@
 # @lc code=start
 class Solution:
     def findKthPositive(self, arr: List[int], k: int) -> int:
-      n = len(arr)
-      low,high = 0, n-1
-      while low<=high:
-        mid = (low+high)//2
-        missing = arr[mid] - (mid+1)
-        if missing < k:
-          low = mid+1
-        else:
-          high = mid-1
-      return high+1+k
+        low, high = 0, len(arr)-1
+
+        while low<=high:
+            mid = (low+high)//2
+            missing = arr[mid] - (mid+1)
+
+            if missing < k:
+                low = mid+1
+            else:
+                high = mid-1
+        
+        # ans = arr[high] + (something more)
+        # ans = arr[high] + k - (missing[high])
+        # ans = arr[high] + k - (arr[high] - (high+1))
+        # ans = arr[high] + k - arr[high] + high + 1
+        # ans = k + (high + 1)
+        # ans = k + (low)
+        # return k + high + 1
+        return k + low
         
 # @lc code=end
 
