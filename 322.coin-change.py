@@ -5,37 +5,47 @@
 #
 
 # @lc code=start
+from typing import List
+from functools import cache
 class Solution:
     def coinChange(self, coins: List[int], amount: int) -> int:
-        def MinimumCoins(self, coins, amount):
-            # init
-            n = len(coins)
-            prev = [0] * (amount+1)
-            curr = [0] * (amount+1)
+        @cache      # memo
+        def recursion(i, target):
+            # base case
+            if i == 0:
+                # if we can use the last coin to 
+                # meet the target, return the no. 
+                # of coins 
+                if target % coins[0] == 0:
+                    return target // coins[0]
 
-            # init oth row of table
-            for T in range(amount+1):
-                if T % coins[0] == 0: prev[T] = T // coins[0]
-                else: prev[T] = float('inf')
+                # else if not possible,
+                # return very high val
+                else:
+                    return int(1e9)
 
-            for i in range(1, n):
-                for T in range(amount+1):
-                    # init
-                    take, nottake = float('inf'), None
-
-                    # not take
-                    nottake = 0 + prev[T]
-                    
-                    # take
-                    if coins[i] <= T:
-                        take = 1 + curr[T - coins[i]]
-                    
-                    curr[T] = min(take, nottake)
+            # do not take the coin, 
+            # move to the next coin
+            not_take = 0 + recursion(i-1, target)
             
-            ans = prev[amount]
-            if ans >= int(1e9): return -1
-            
-            return ans
+            # case: we take that coin
+            # casue we can take inf, we don't move pointer
+            take = int(1e9)
+            if coins[i] <= target:
+                take = 1 + recursion(i, target-coins[i])
+
+            # return back the minium of 
+            # both situations
+            return min(take, not_take)
+
+        n = len(coins)
+        res = recursion(n-1, amount)
+        
+        # check if target was possible
+        if res == int(1e9):
+            return -1
+        else:
+            return res
         
 # @lc code=end
 
