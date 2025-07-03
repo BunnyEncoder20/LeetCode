@@ -5,6 +5,7 @@
 #
 
 # @lc code=start
+from typing import List
 class Solution:
     def wordBreak(self, s: str, wordDict: List[str]) -> bool:
         n = len(s)
@@ -19,6 +20,7 @@ class Solution:
 
             for word in wordDict:
                 # check s[i:word] has enough chars for word
+                # and s[i:word] matches Dict word
                 if (
                     i+len(word) <= len(s) and 
                     s[i:i+len(word)] == word
