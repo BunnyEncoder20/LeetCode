@@ -19,26 +19,11 @@ class Solution:
         for num in nums[:k]:
             heapq.heappush(heap, num)
         
-        print(heap)
-        
         # remaing elements
         for num in nums[k:]:
             heapq.heappushpop(heap, num)
         
-        print(heap)
-        
-        # check for same nums 
-        if k == 1:
-            return heap[0] if len(heap) == 1 else -1
-        
         return heap[0]
-        
-        
-        
-        
-               
-                
-        
         
 # @lc code=end
 
