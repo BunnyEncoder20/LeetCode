@@ -23,7 +23,7 @@ class Solution:
                 stack.pop()
             
             # can insert closing bracket
-            if closing < n:
+            if closing < opening:
                 stack.append(')')
                 backtracking(opening,closing+1)
                 stack.pop()
