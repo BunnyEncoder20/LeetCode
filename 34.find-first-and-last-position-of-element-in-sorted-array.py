@@ -8,50 +8,38 @@
 from typing import List
 class Solution:
     def searchRange(self, nums: List[int], target: int) -> List[int]:
-        first = self.first_bs(nums, target)
-        last = self.last_bs(nums, target)
-
-        ans = [-1,-1]
-        if first != None: ans[0] = first
-        if last != None: ans[1] = last
-
+        ans = []
+        ans.append(self.first_pos(nums, target))
+        ans.append(self.last_pos(nums, target))
         return ans
     
-    def first_bs(self, arr, target):
-        low, high = 0, len(arr)-1
-        ans = None
-
+    def first_pos(self, nums, target):
+        '''lowerbound'''
+        low, high = 0, len(nums)-1
         while low<=high:
             mid = (low+high)//2
-            
-            if arr[mid] == target:
-                ans = mid
+            if nums[mid] >= target:
                 high = mid-1
-            elif arr[mid] < target:
-                low = mid + 1
             else:
-                high = mid - 1
-        
-        return ans
-    
-    def last_bs(self, arr, target):
-        low, high = 0, len(arr)-1
-        ans = None
+                low = mid+1
 
+        if low < len(nums) and nums[low] == target:
+            return low
+        return -1
+
+    def last_pos(self, nums, target):
+        '''upperbound'''
+        low, high = 0, len(nums)-1
         while low<=high:
             mid = (low+high)//2
-            
-            if arr[mid] == target:
-                ans = mid
-                low = mid + 1
-            elif arr[mid] < target:
-                low = mid + 1
+            if nums[mid] > target:
+                high = mid-1
             else:
-                high = mid - 1
-        
-        return ans
-                
+                low = mid+1
+
+        if low > 0 and nums[low-1] == target:
+            return low-1
+        return -1
         
         
 # @lc code=end
-
