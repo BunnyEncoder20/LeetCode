@@ -7,9 +7,11 @@
 # @lc code=start
 class Solution:
     def findTheWinner(self, n: int, k: int) -> int:
+        # make the friends arr 1-n
         friends = list(range(1,n+1))
-        skip = k-1      # casuse k is given as 1-based idx
-        i = skip        # idx to eliminate
+        skip = k-1      # cause k is given as 1-based idx
+
+        i = skip        # init idx to eliminate
         while len(friends) > 1:
             # eliminate the idx
             friends.pop(i)
