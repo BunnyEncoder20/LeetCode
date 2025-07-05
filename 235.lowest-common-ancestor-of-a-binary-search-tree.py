@@ -25,6 +25,7 @@ class Solution:
                 return True
             
             # both lsb and rst return false
+            # backtrack
             path.pop()
             return False
         
@@ -41,10 +42,5 @@ class Solution:
                 break
         return lca
             
-        
-        
-            
-        
-        
 # @lc code=end
 
