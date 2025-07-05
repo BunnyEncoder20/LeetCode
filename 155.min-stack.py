@@ -28,9 +28,10 @@ class MinStack:
             # sub case 2.2: the val < mini
             # encode the val and push into stack
             else:
-                encoded_val = (2*val - self.mini)
-                self.mini = val
-                self.stack.append(encoded_val)
+                prev_min = self.mini
+                encoded_val = (2*val - prev_min)    # use this formula later
+                self.mini = val                     # val which came became min
+                self.stack.append(encoded_val)      # encoded pushed into stack
 
 
     def pop(self) -> None:
@@ -45,7 +46,12 @@ class MinStack:
         # Case 3: if the top was smaller than mini, 
         # its encoded val ∴ mini will change
         if top_element < self.mini:
-            self.mini = 2*self.mini - top_element
+            val = self.mini                 # that original val was made mini
+            encoded_val = top_element       # encode val was pushed into stack
+            prev_min = 2*val - encoded_val  # from formula
+
+            # restore prev min
+            self.mini = prev_min
         
         return
 
