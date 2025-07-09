@@ -6,28 +6,27 @@
 
 # @lc code=start
 class Solution:
+    def longestCommonSubseq(self, s: str, t:str) -> int:
+        def recursion(i, j):
+            # base case
+            if i<0 or j<0:
+                return 0
+
+            if s[i] == t[j]:
+                return 1 + recursion(i-1, j-1)
+            else:
+                return max(recursion(i-1, j), recursion(i, j-1))
+
+        l1, l2 = len(s), len(t)
+        return recursion(l1-1, l2-1)
+
     def longestPalindromeSubseq(self, s: str) -> int:
-        return self.lcs(s, s[::-1])
-    
-    def lcs(self, s, t):
-        n = len(s)
-        curr = [0] * (n+1)
-        prev = [0] * (n+1)
+        # Cause we looking for palindrome,
+        # reversing the string and looking for
+        # common subseq gives common palindromic strs
+        return self.longestCommonSubseq(s, s[::-1])
 
-        for i in range(1, n+1):
-            for j in range(1, n+1):
-                if s[i-1] == t[j-1]:
-                    curr[j] = 1 + prev[j-1]
-                else:
-                    curr[j] = max(
-                        prev[j],
-                        curr[j-1]
-                    )
-            prev[:] = curr
 
-        return prev[n]
-        
-        
-        
+
+
 # @lc code=end
-
