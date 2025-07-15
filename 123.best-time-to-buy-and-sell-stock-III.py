@@ -53,3 +53,28 @@ class Solution2:
         if n == 0: return 0
         dp = [[[-1 for _ in range(3)] for _ in range(2)] for _ in range(n)]
         return recursion(0, True, 2)
+
+class Solution3:
+    def maxProfit(self, k: int, arr: List[int]) -> int:
+        def recursion(i, canBuy, cap):
+            if cap == 0 or i ==n:
+                return 0
+
+            if dp[i][canBuy][cap] != -1:
+                return dp[i][canBuy][cap]
+
+            if canBuy:
+                dp[i][canBuy][cap] = max(
+                    0 + recursion(i+1, True, cap),
+                    -arr[i] + recursion(i+1, False, cap)
+                )
+            else:
+                dp[i][canBuy][cap] = max(
+                    0 + recursion(i+1, False, cap),
+                    +arr[i] + recursion(i+1, True, cap-1)
+                )
+            return dp[i][canBuy][cap]
+
+        n = len(arr)
+        dp = [[[-1 for _ in range(k+1)] for _ in range(2)] for _ in range(n)]
+        return recursion(0, True, k)
