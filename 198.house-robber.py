@@ -51,6 +51,5 @@ if __name__ == '__main__':
 
     for i, (nums, expected) in enumerate(tests):
         output = solver.rob(nums)
-        status = "Passed" if output == expected else "Failed"
-        print(f"testcase{i+1}: {nums} | {output} | {expected} | {status}")
-
+        status = "✅ Passed" if output == expected else "❌ Failed"
+        print(f"testcase{i+1}: input:{nums} | output:{output} | expected:{expected} | {status}")
