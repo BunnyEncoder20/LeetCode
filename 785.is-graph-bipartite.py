@@ -5,6 +5,7 @@
 #
 
 # @lc code=start
+from typing import List
 from collections import deque
 class Solution:
     def isBipartite(self, adj: List[List[int]]) -> bool:
@@ -13,33 +14,28 @@ class Solution:
             for it in adj[node]:
                 if not colored[it]:
                     flag = dfs(it, colored[node])
-                    
+
                     # if false from futher in traversal, return it
                     if not flag: return False
-                
+
                 # the node was already colored
                 elif colored[it] == colored[node]:
                     return False
-            
+
             return True
-            
 
-        def bfs(snode,scolor):
-            q = deque([(snode, scolor)])
 
+        def bfs(root):
+            q = deque([root])
+            colored[root] = 1
             while q:
-                node, color = q.popleft()
-                for it in adj[node]:
-                    # If not colored
-                    if not colored[it]:
-                        colored[it] = -1*color      # color opposite of parent node color
-                        q.append((it, -1*color))    # enque adj node
-
-                    # If colored same color as parent node
-                    elif colored[it] == color:
+                node = q.popleft()
+                for nn in adj[node]:
+                    if not colored[nn]:
+                        colored[nn] = -1 * colored[node]    # color opposite of neighbour node
+                        q.append(nn)                        # put into q for processing
+                    elif colored[nn] == colored[node]:      # if neighbour colored same as node
                         return False
-            
-            # traverse the graph, didn't flag false
             return True
 
         V = len(adj)
@@ -54,9 +50,8 @@ class Solution:
                 # was not able to be biparted
                 if not completely_biparted:
                     return False
-        
+
         # Entire graph was parted into 2 completely
         return True
-        
-# @lc code=end
 
+# @lc code=end
